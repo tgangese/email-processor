@@ -46,10 +46,20 @@ def orchestrate_email_processing(raw_email: str) -> Optional[Dict[str, str]]:
 
 def main():
     logger.info("App Started")
+    print("--- Email Processor ---", flush=True)
     try:
-        email = input("Please enter your email: ")
-        processed = orchestrate_email_processing(email)
-        print(f"\nValid! -> {processed}" if processed else "\nInvalid email.")
+        while True:
+            print("Please enter your email (or 'q' to quit): ", end="", flush=True)
+            email = input().strip()
+            if email.lower() == 'q':
+                print("Bye!", flush=True)
+                break
+            processed = orchestrate_email_processing(email)
+            if processed:
+                print(f"\n✅ Valid! -> {processed}\n", flush=True)
+                break
+            else:
+                print("\n❌ Invalid email. Try again.\n", flush=True)
     finally:
         logger.info("App Stopped")
 
